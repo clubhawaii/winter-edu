@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>겨울특강 홍보물 만들기 · 사전 과제</title>
 <meta name="description" content="교육 당일 바로 홍보물을 만들 수 있도록 학원 자료를 미리 보내 주세요.">
+<!-- 링크 미리보기 (카카오톡 · 문자 · SNS) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="클럽하와이">
+<meta property="og:title" content="겨울특강 홍보물 만들기 · 사전 과제">
+<meta property="og:description" content="교육 당일 바로 홍보물을 만들 수 있도록 학원 자료를 미리 보내 주세요.">
+<meta property="og:url" content="https://clubhawaii.github.io/winter-edu/">
+<meta property="og:image" content="https://clubhawaii.github.io/winter-edu/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="겨울특강 홍보물 · 사전 과제를 제출해주세요">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://clubhawaii.github.io/winter-edu/og-image.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
@@ -31,6 +43,10 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .back svg{width:24px;height:24px}
 .bar{flex:1;height:6px;border-radius:3px;background:#EDEDED;overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--pink);border-radius:3px;transition:width .35s ease}
+.save-st{flex:0 0 auto;font-size:12px;font-weight:500;color:var(--sub);white-space:nowrap}
+.save-st[data-st=err]{color:var(--danger)}
+.upl{position:absolute;inset:0;display:grid;place-items:center;background:rgba(255,255,255,.72);font-size:12px;font-weight:700;color:var(--gray)}
+.pend{margin-top:18px!important;padding:12px 14px;border-radius:var(--r);background:var(--soft);font-size:14px!important;color:var(--ink)!important;font-weight:600}
 #screen{padding:12px 20px 140px}
 .step{animation:inR .28s ease both}
 .step.from-left{animation-name:inL}
@@ -134,6 +150,7 @@ textarea.inp{height:auto;min-height:120px;padding:15px 16px;line-height:1.55;res
 .addfile:hover,.addfile.over{border-color:var(--pink);color:var(--pink);background:var(--soft)}
 .addfile input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .fhint{margin-top:8px;font-size:13px;color:var(--sub)}
+.fhint.fh-top{margin:-2px 0 10px 2px}
 .or{display:flex;align-items:center;gap:12px;margin:26px 0 14px;font-size:13px;font-weight:600;color:var(--sub)}
 .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
 
@@ -213,14 +230,10 @@ textarea.inp{height:auto;min-height:120px;padding:15px 16px;line-height:1.55;res
 
 /* 로고 · 푸터 */
 .brand-logo{display:block;height:30px;width:auto;margin-bottom:28px}
-.site-foot{margin:48px -20px -140px;padding:28px 20px 160px;background:#F7F7F7;border-top:1px solid var(--line);font-size:12px;line-height:1.75;color:var(--sub)}
-.site-foot strong{display:block;margin-bottom:8px;font-size:13px;font-weight:700;color:var(--gray)}
-.site-foot p span{display:inline-block;margin-right:12px}
-.site-foot .links{margin-top:10px}
-.site-foot .links a{color:var(--gray);font-weight:600;text-decoration:none}
-.site-foot .links a + a::before{content:"|";margin:0 9px;color:var(--mute);font-weight:400}
-.site-foot .links a:hover{color:var(--ink)}
-.site-foot .copy{margin-top:10px}
+.site-foot{margin:40px -20px -140px;padding:18px 20px 158px;border-top:1px solid var(--line);font-size:12px;color:var(--sub);text-align:center}
+.site-foot .copy{margin:0}
+#screen.nocta{padding-bottom:0}
+#screen.nocta .site-foot{margin-bottom:0;padding-bottom:18px}
 /* 특강별 입력 */
 .ptag{color:var(--ink);font-weight:700}
 .opt-t{margin-left:4px;font-size:12px;font-weight:500;color:var(--mute)}
@@ -246,8 +259,7 @@ body.is-pc .toast{bottom:108px}
 .brand{display:flex;align-items:center;gap:12px}
 .bar-logo{height:20px;width:auto;margin-right:6px}
 .pc-foot-wrap{border-top:1px solid var(--line)}
-.pc-foot-wrap{background:#F7F7F7}
-.pc-foot-wrap .site-foot{max-width:1160px;margin:0 auto;padding:32px 32px 40px;background:none;border:0}
+.pc-foot-wrap .site-foot{max-width:1160px;margin:0 auto;padding:22px 32px;background:none;border:0}
 .pi-l .brand-logo{height:34px;margin-bottom:36px}
 .brand strong{font-size:19px;font-weight:800;letter-spacing:-.02em}
 .brand strong em{font-style:normal;color:var(--pink)}
@@ -346,6 +358,7 @@ body.is-pc .toast{bottom:108px}
       <svg viewBox="0 0 24 24" fill="none" stroke="#191919" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
     </button>
     <div class="bar"><i id="bar"></i></div>
+    <span class="save-st" aria-live="polite"></span>
   </header>
   <main id="screen"></main>
   <footer class="cta" id="cta"><button type="button" id="next">다음</button></footer>
@@ -405,6 +418,7 @@ let photos = [];       // 학원 사진 [{ file?, remote?, fileId?, url }]
 let submission = null; // 이미 제출한 기록 { submitId, token, submittedAt, updatedAt }
 let editMode = false, doneKind = 'thanks';
 let loading = false, hasDraft = false, savedStep = null;
+let remoteReady = false, pendingEdit = false;   // 서버에서 불러오기를 마쳤는지 · 제출 뒤 고치던 내용이 있는지
 
 function toast(m){ const t=$('#toast'); t.textContent=m; t.classList.add('on'); clearTimeout(toast.t); toast.t=setTimeout(()=>t.classList.remove('on'),2800); }
 function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
@@ -478,6 +492,7 @@ function setLogoFile(f){
   if (f.size > CONFIG.LOGO_MAX_MB * 1048576) { toast(`로고 파일은 ${CONFIG.LOGO_MAX_MB}MB 이하로 올려주세요.`); return false; }
   if (logo && logo.file) URL.revokeObjectURL(logo.url);
   logo = { file:f, url:URL.createObjectURL(f), name:f.name, size:f.size, mimeType:f.type, prefilled:false };
+  uploadItem(logo, 'logo');
   return true;
 }
 const logoIsImg = () => !!(logo && logo.url && (logo.mimeType || '').startsWith('image/'));
@@ -490,12 +505,12 @@ const C = {
     title: '', err: '빠진 학원 정보를 채워주세요.',
     card: () => S.prefilled && !S.editInfo && filled(S.academyName) && filled(S.address) && filled(S.phone),
     mount(box){
-      box.innerHTML = '';
+      box.innerHTML = ''; box._redraw = null;
       if (C.info.card()) {
         const card = el('div','icard');
         const lg = el('div','ilogo');
         if (logo) {
-          lg.innerHTML = logoIsImg() ? `<img src="${logo.url}" alt="학원 로고">` : `<strong>${esc(logo.name)}</strong>`;
+          lg.innerHTML = (logoIsImg() ? `<img src="${logo.url}" alt="학원 로고">` : `<strong>${esc(logo.name)}</strong>`) + (logo.uploading ? '<span class="upl">올리는 중…</span>' : '');
           const sw = el('label','swap','로고 바꾸기<input type="file" accept="image/*,.ai,.pdf,.svg,.eps,.psd">'); lg.appendChild(sw);
         } else {
           lg.innerHTML = `<label class="nologo">로고 파일 올리기<small>등록된 로고가 없어요</small><input type="file" accept="image/*,.ai,.pdf,.svg,.eps,.psd"></label>`;
@@ -513,15 +528,19 @@ const C = {
         return;
       }
       // 직접 입력 · 수정
-      const g1 = el('div','grp'); box.appendChild(g1); label(g1, '학원 로고');
-      if (logo) {
-        const r = el('div','logo-row',`<div class="th">${logoIsImg() ? `<img src="${logo.url}" alt="">` : esc(ext(logo.name))}</div><div class="mt"><strong>${esc(logo.name)}</strong>${logo.size ? fmtSize(logo.size) : '등록된 로고'}</div><label class="pick link">바꾸기<input type="file" accept="image/*,.ai,.pdf,.svg,.eps,.psd"></label>`);
-        g1.appendChild(r);
-      } else {
-        const u = el('label','upload',`<input type="file" accept="image/*,.ai,.pdf,.svg,.eps,.psd"><span class="ic">${PLUS}</span><strong>로고 파일 올리기</strong><span>투명 배경 PNG가 가장 좋아요 · AI·PDF·SVG도 괜찮아요</span>`);
-        g1.appendChild(u); dragUI(u);
-      }
-      $('input[type=file]', g1).addEventListener('change', e => { if (setLogoFile(e.target.files[0])) { C.info.mount(box); changed(); } });
+      const g1 = el('div','grp'); box.appendChild(g1);
+      const drawLogo = () => {
+        g1.innerHTML = ''; label(g1, '학원 로고');
+        if (logo) {
+          const st = logo.uploading ? '올리는 중…' : logo.size ? fmtSize(logo.size) : '등록된 로고';
+          g1.appendChild(el('div','logo-row',`<div class="th">${logoIsImg() ? `<img src="${logo.url}" alt="">` : esc(ext(logo.name))}</div><div class="mt"><strong>${esc(logo.name)}</strong>${st}</div><label class="pick link">바꾸기<input type="file" accept="image/*,.ai,.pdf,.svg,.eps,.psd"></label>`));
+        } else {
+          const u = el('label','upload',`<input type="file" accept="image/*,.ai,.pdf,.svg,.eps,.psd"><span class="ic">${PLUS}</span><strong>로고 파일 올리기</strong><span>투명 배경 PNG가 가장 좋아요 · AI·PDF·SVG도 괜찮아요</span>`);
+          g1.appendChild(u); dragUI(u);
+        }
+        $('input[type=file]', g1).addEventListener('change', e => { if (setLogoFile(e.target.files[0])) { drawLogo(); changed(); } });
+      };
+      drawLogo(); box._redraw = drawLogo;
 
       const g2 = el('div','grp'); box.appendChild(g2); label(g2, '학원명');
       textInput(g2, { get:()=>S.academyName, set:v=>S.academyName=v, ph:'예) 클럽하와이 영어수학학원' });
@@ -570,8 +589,11 @@ const C = {
     mount(box){
       box.innerHTML = '';
       const list = el('div','flist'); box.appendChild(list);
-      list.innerHTML = docs.map((d, i) => `<div class="fr"><div class="th">${d.url ? `<img src="${d.url}" alt="">` : esc(ext(d.name))}</div><div class="mt"><strong>${esc(d.name)}</strong>${d.remote ? '제출한 파일' : fmtSize(d.size)}</div><button type="button" class="x" data-i="${i}" aria-label="삭제">×</button></div>`).join('');
-      $$('.x', list).forEach(b => b.addEventListener('click', () => { const i = +b.dataset.i; if (docs[i].url && docs[i].file) URL.revokeObjectURL(docs[i].url); docs.splice(i, 1); C.files.mount(box); changed(); }));
+      const drawList = () => {
+        list.innerHTML = docs.map((d, i) => `<div class="fr"><div class="th">${d.url ? `<img src="${d.url}" alt="">` : esc(ext(d.name))}</div><div class="mt"><strong>${esc(d.name)}</strong>${fileState(d)}</div><button type="button" class="x" data-i="${i}" aria-label="삭제">×</button></div>`).join('');
+        $$('.x', list).forEach(b => b.addEventListener('click', () => { const i = +b.dataset.i; if (docs[i].url && docs[i].file) URL.revokeObjectURL(docs[i].url); docs.splice(i, 1); C.files.mount(box); changed(); }));
+      };
+      drawList(); box._redraw = drawList;
       if (docs.length < CONFIG.FILE_MAX_COUNT) {
         const add = el('label','addfile',`<input type="file" multiple accept="image/*,.pdf,.hwp,.hwpx,.doc,.docx,.xls,.xlsx,.ppt,.pptx">+ 파일 올리기`);
         box.appendChild(add); dragUI(add);
@@ -584,7 +606,8 @@ const C = {
             if (f.size > CONFIG.FILE_MAX_MB * 1048576) { toast(`${f.name}: 파일 1개는 ${CONFIG.FILE_MAX_MB}MB 이하로 올려주세요.`); continue; }
             if (total + f.size > CONFIG.FILE_TOTAL_MB * 1048576) { toast(`자료는 모두 합쳐 ${CONFIG.FILE_TOTAL_MB}MB까지 올릴 수 있어요.`); break; }
             total += f.size;
-            docs.push({ file:f, name:f.name, size:f.size, type:f.type, url: f.type.startsWith('image/') ? URL.createObjectURL(f) : null });
+            const d = { file:f, name:f.name, size:f.size, type:f.type, url: f.type.startsWith('image/') ? URL.createObjectURL(f) : null };
+            docs.push(d); uploadItem(d, 'doc');
           }
           C.files.mount(box); changed();
         });
@@ -680,7 +703,7 @@ const C = {
     qsub: () => '밝고 선명한 사진이 좋아요.<br>학생 얼굴이 나온 사진은 사용 동의를 받은 사진만 올려주세요.',
     title: '', err: `사진을 ${CONFIG.PHOTO_MIN}장 이상 올려주세요.`,
     mount(box){
-      box.innerHTML = `<div class="grid">${photos.map((p, i) => `<div class="tile">${p.url ? `<img src="${p.url}" alt="">` : ''}<span class="n">${i+1}</span><button type="button" class="del" data-i="${i}" aria-label="사진 ${i+1} 삭제">×</button></div>`).join('')}
+      box.innerHTML = `<div class="grid">${photos.map((p, i) => `<div class="tile">${p.url ? `<img src="${p.url}" alt="">` : ''}${p.uploading ? '<span class="upl">올리는 중…</span>' : ''}<span class="n">${i+1}</span><button type="button" class="del" data-i="${i}" aria-label="사진 ${i+1} 삭제">×</button></div>`).join('')}
         ${photos.length < CONFIG.PHOTO_MAX ? `<label class="tile add-tile"><input type="file" accept="image/*" multiple><b>+</b>사진 추가</label>` : ''}</div>
         <p class="count"><b>${photos.length}</b> / ${CONFIG.PHOTO_MAX}장</p>`;
       $$('.del', box).forEach(b => b.addEventListener('click', () => { const i = +b.dataset.i; if (photos[i].file) URL.revokeObjectURL(photos[i].url); photos.splice(i, 1); C.photos.mount(box); changed(); }));
@@ -689,7 +712,7 @@ const C = {
         const files = [...e.target.files].filter(f => f.type.startsWith('image/') || /\.(heic|heif)$/i.test(f.name));
         const room = CONFIG.PHOTO_MAX - photos.length;
         if (files.length > room) toast(`사진은 최대 ${CONFIG.PHOTO_MAX}장이라 ${room}장만 추가했어요.`);
-        photos.push(...files.slice(0, room).map(f => ({ file:f, url:URL.createObjectURL(f) })));
+        files.slice(0, room).forEach(f => { const ph = { file:f, url:URL.createObjectURL(f), name:f.name, type:f.type }; photos.push(ph); uploadItem(ph, 'photo'); });
         C.photos.mount(box); changed();
       });
     },
@@ -697,18 +720,19 @@ const C = {
   },
 
   message: {
-    q: () => '학원의 <em>슬로건</em>이나<br>강조하고 싶은 말이 있나요?',
-    qsub: () => '선택 사항이에요. 없으면 비워두셔도 돼요.',
-    title: '', optional: true,
+    q: () => '학원의 <em>슬로건</em>과<br><em>강조하고 싶은 말</em>을 적어주세요',
+    qsub: () => '',
+    title: '', err: '슬로건과 강조하고 싶은 말을 모두 적어주세요.',
     mount(box){
       box.innerHTML = '';
       const g1 = el('div','grp'); box.appendChild(g1); label(g1, '학원의 슬로건');
+      g1.appendChild(el('p','fhint fh-top','학원을 한 문장으로 소개하는 말이에요. 지금 쓰고 계신 문구가 있다면 그대로 적어주세요.'));
       textInput(g1, { get:()=>S.slogan, set:v=>S.slogan=v, ph:'예) 생각하는 힘을 키우는 수학', max:60 });
       const g2 = el('div','grp'); box.appendChild(g2); label(g2, '이번 특강에서 꼭 강조하고 싶은 말');
+      g2.appendChild(el('p','fhint fh-top','학부모님께 이번 겨울특강에서 꼭 전하고 싶은 한마디예요.'));
       textInput(g2, { get:()=>S.emphasis, set:v=>S.emphasis=v, ph:'예) 소수 정예 8명, 매 수업 테스트', max:100 });
     },
-    valid: () => true,
-    cta: () => toReview ? null : (filled(S.slogan) || filled(S.emphasis) ? null : '건너뛰기')
+    valid: () => filled(S.slogan) && filled(S.emphasis)
   },
 
   review: {
@@ -748,8 +772,8 @@ const C = {
       h += `</dl></section><section><h2>학원 사진</h2><dl>`;
       h += row('사진', '', 'photos', { html: photos.length >= CONFIG.PHOTO_MIN ? `<div class="thumbs">${photos.map(p => p.url ? `<img src="${p.url}" alt="">` : '<span class="ph"></span>').join('')}</div>` : '' });
       h += `</dl></section><section><h2>학원의 메시지</h2><dl>`;
-      h += row('슬로건', S.slogan, 'message', { need:false });
-      h += row('강조하고 싶은 말', S.emphasis, 'message', { need:false });
+      h += row('슬로건', S.slogan, 'message');
+      h += row('강조하고 싶은 말', S.emphasis, 'message');
       h += `</dl></section></div>`;
       box.innerHTML = h;
       $$('[data-go]', box).forEach(b => b.addEventListener('click', () => { toReview = true; go(b.dataset.go); }));
@@ -784,17 +808,17 @@ function introParts(){
   return {
     head: `${logoHTML()}<h1>겨울특강<br><em>홍보물</em> 만들기</h1><p class="lead">바이브 디자인 교육 사전 과제</p>`,
     must: `<div class="must"><strong>교육 전에 꼭 제출해 주세요</strong>
-      <p>${who}교육 당일에는 여기서 받은 자료로 <b>바로 홍보물을 만들어요.</b> 미리 보내 주셔야 현장에서 파일을 찾느라 시간을 쓰지 않고 실습에 집중하실 수 있어요.</p>
-      <p class="easy"><span class="ck">${CHECK}</span><span>새로 정리하실 필요 없어요. 갖고 계신 자료를 그대로 올려주세요.</span></p></div>`,
+      <p>${who}교육 당일에는 여기서 받은 자료로 <b>바로 홍보물을 만들어요.</b> 미리 보내 주셔야 현장에서 파일을 찾느라 시간을 쓰지 않고 실습에 집중하실 수 있어요.</p></div>`,
     info: `<dl class="info">
       <div><dt>교육 일시</dt><dd>${esc(CONFIG.EDU_DATE)}</dd></div>
       <div><dt>장소</dt><dd>${esc(CONFIG.EDU_PLACE)}</dd></div>
       ${CONFIG.DEADLINE ? `<div class="dl"><dt>제출 기한</dt><dd>${esc(CONFIG.DEADLINE)}</dd></div>` : ''}</dl>`,
-    prep: `<div class="prep"><h2>해 주실 일은 세 가지예요</h2><ul>
+    prep: `<div class="prep"><h2>해 주실 일은 네 가지예요</h2><ul>
       <li><i>1</i>${S.prefilled ? '미리 채워 둔 학원 정보 확인하기' : '학원 정보 입력하기'}</li>
       <li><i>2</i>겨울방학 특강 준비 상황 알려주기</li>
-      <li><i>3</i>학원 내부와 수업 사진 ${CONFIG.PHOTO_MIN}~${CONFIG.PHOTO_MAX}장 올리기</li></ul></div>`,
-    resume: hasDraft ? `<p class="resume">작성하던 내용이 있어요. 파일은 다시 올려 주셔야 해요.<button type="button" class="link" id="restart">처음부터 다시 쓰기</button></p>` : ''
+      <li><i>3</i>학원 내부와 수업 사진 ${CONFIG.PHOTO_MIN}~${CONFIG.PHOTO_MAX}장 올리기</li>
+      <li><i>4</i>학원 슬로건과 강조하고 싶은 말 적기</li></ul></div>`,
+    resume: hasDraft ? `<p class="resume">${serverMode() ? '작성하던 내용이 저장돼 있어요. 이어서 쓰시면 돼요.' : '작성하던 내용이 있어요. 파일은 다시 올려 주셔야 해요.'}<button type="button" class="link" id="restart">처음부터 다시 쓰기</button></p>` : ''
   };
 }
 function bindRestart(box){
@@ -802,18 +826,13 @@ function bindRestart(box){
   if (r) r.addEventListener('click', () => {
     if (!confirm('작성하던 내용을 모두 지우고 처음부터 쓸까요?')) return;
     clearDraft();
-    const code = S.code; Object.assign(S, blank(), { code }); if (member) applyMember(member);
+    const code = S.code; Object.assign(S, blank(), { code }); logo = null; if (member) applyMember(member);
     docs = []; photos = []; hasDraft = false; savedStep = null; rerender();
+    if (serverMode()) pushDraft();
   });
 }
 const startLabel = () => loading ? '학원 정보를 불러오는 중이에요' : hasDraft ? '이어서 작성하기' : '시작하기';
-const footerHTML = () => `<footer class="site-foot">
-  <strong>클럽하와이 (Club Hawaii)</strong>
-  <p><span>사업자등록번호 : 876-86-02113</span><span>통신판매번호 : 2022-대구달서-1814</span><span>통합상담센터 : 010 – 2939 – 7909</span></p>
-  <p><span>주식회사 이즈유</span><span>대표자 : 박현숙</span><span>주소 : 42802 대구광역시 달서구 송현로7길 10, 1113동 201호</span></p>
-  <p class="links"><a href="https://www.clubhawaii.co.kr/terms" target="_blank" rel="noopener">이용약관</a><a href="https://www.clubhawaii.co.kr/privacy" target="_blank" rel="noopener">개인정보처리방침</a><a href="https://www.ftc.go.kr/bizCommPop.do?wrkr_no=8768602113" target="_blank" rel="noopener">정보 조회</a></p>
-  <p class="copy">ⓒ 2021 클럽하와이. All rights reserved.</p>
-</footer>`;
+const footerHTML = () => `<footer class="site-foot"><p class="copy">ⓒ 2021 클럽하와이. All rights reserved.</p></footer>`;
 const logoHTML = (cls = 'brand-logo') => `<img class="${cls}" src="${LOGO_SRC}" alt="CLUB HAWAII">`;
 const fmtDate = t => { const d = new Date(t); return isNaN(d) ? '' : `${d.getMonth() + 1}월 ${d.getDate()}일 ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
 function doneHTML(){
@@ -827,7 +846,8 @@ function doneHTML(){
   <div class="ok">${CHECK.replace('stroke-width="3.2"','stroke-width="2.8"')}</div>
   <h1>${title}</h1>
   <p>${lead}</p>
-  <div class="edit-box"><button type="button" class="btn-edit" id="editBtn">제출한 내용 수정하기</button><p>${where}</p></div>
+  ${pendingEdit ? '<p class="pend">제출한 뒤 고치던 내용이 저장돼 있어요. ‘수정 내용 제출하기’를 눌러야 반영돼요.</p>' : ''}
+  <div class="edit-box"><button type="button" class="btn-edit" id="editBtn">${pendingEdit ? '고치던 내용 이어서 하기' : '제출한 내용 수정하기'}</button><p>${where}</p></div>
   <dl class="info">
     <div><dt>교육 일시</dt><dd>${esc(CONFIG.EDU_DATE)}</dd></div>
     <div><dt>장소</dt><dd>${esc(CONFIG.EDU_PLACE)}</dd></div>
@@ -837,9 +857,9 @@ function doneHTML(){
 function bindDone(root){
   const b = $('#editBtn', root); if (!b) return;
   b.addEventListener('click', () => {
-    editMode = true; toReview = false; pcToReview = false;
+    editMode = true; toReview = false; pcToReview = false; cur = 'review'; pcSec = 4;
     if (isPC()) { pcSec = 4; applyMode(); pcRender(); window.scrollTo(0, 0); }
-    else { cur = 'review'; $('#cta').hidden = false; render(); }
+    else { cur = 'review'; $('#cta').hidden = false; screen.classList.remove('nocta'); render(); }
   });
 }
 
@@ -849,6 +869,7 @@ const screen = $('#screen'), nextBtn = $('#next');
 const mobileSteps = () => ['intro','info','status',...courseIds(true),'photos','message','review'];
 
 function render(dir = 'right'){
+  screen.classList.remove('nocta');
   const steps = mobileSteps();
   let idx = steps.indexOf(cur); if (idx < 0) { idx = 0; cur = 'intro'; }
   const wrap = el('div', 'step' + (dir === 'left' ? ' from-left' : ''));
@@ -871,7 +892,7 @@ function render(dir = 'right'){
   window.scrollTo(0, 0);
   const first = $('input:not([type=file]):not(:disabled), textarea', body);
   if (first && cur !== 'info' && matchMedia('(hover:hover)').matches) setTimeout(() => first.focus({ preventScroll:true }), 280);
-  saveDraft();
+  scheduleSave();
 }
 
 function refresh(){
@@ -882,8 +903,7 @@ function refresh(){
   nextBtn.disabled = !c.valid(i);
   nextBtn.textContent = (c.cta && c.cta(i)) || (toReview && typeOf(cur) !== 'p-more' ? '확인 화면으로' : '다음');
 }
-let saveT;
-function changed(){ refresh(); clearTimeout(saveT); saveT = setTimeout(saveDraft, 300); }
+function changed(){ refresh(); scheduleSave(); }
 
 function go(id, dir = 'right'){
   if (isPC()) { if (toReview) { pcToReview = true; toReview = false; } return pcGo(secOf(id), id); }
@@ -921,7 +941,7 @@ const SECTIONS = [
   { title:'학원 정보 확인', h: () => plain(C.info.q()), sub: () => C.info.qsub() },
   { title:'겨울방학 특강', h: () => plain(C.status.q()), sub: () => C.status.qsub() },
   { title:'학원 사진', h: () => plain(C.photos.q()), sub: () => plain(C.photos.qsub()) },
-  { title:'학원의 메시지', tag:'선택', h: () => plain(C.message.q()), sub: () => C.message.qsub() },
+  { title:'학원의 메시지', h: () => plain(C.message.q()), sub: () => C.message.qsub() },
   { title:'확인 및 제출', h: () => plain(C.review.q()), sub: () => C.review.qsub() }
 ];
 const secIds = i => [['info'], ['status', ...courseIds(false)], ['photos'], ['message'], ['review']][i];
@@ -940,7 +960,7 @@ function pcField(id){
 function drawNav(){
   const nav = $('#pcNav'); if (!nav) return;
   nav.innerHTML = SECTIONS.map((s, i) => {
-    const ok = i < 4 && secOk(i) && (i !== 3 || filled(S.slogan) || filled(S.emphasis));
+    const ok = i < 4 && secOk(i);
     return `<li><button type="button" data-s="${i}" class="${i === pcSec ? 'cur' : ''} ${ok ? 'ok' : ''}"><i>${ok ? CHECK : i + 1}</i><span>${s.title}</span>${s.tag ? `<small>${s.tag}</small>` : ''}</button></li>`;
   }).join('');
   $$('button', nav).forEach(b => b.addEventListener('click', () => { pcToReview = false; pcGo(+b.dataset.s); }));
@@ -951,14 +971,13 @@ function pcChanged(){
   $$('#pcFields .fld.bad').forEach(f => { if (okId(f.dataset.id)) f.classList.remove('bad'); });
   const s = $('#pcStart'); if (s) { s.disabled = loading; s.textContent = startLabel(); }
   const n = $('#pcNext');
-  if (n && pcSec === 3) n.textContent = pcToReview ? '확인 화면으로' : (filled(S.slogan) || filled(S.emphasis) ? '다음' : '건너뛰기');
   if (n && pcSec === 0) n.textContent = C.info.card() ? '네, 맞아요' : (pcToReview ? '확인 화면으로' : '다음');
 }
 function pcGo(i, focusId, showErr){
   pcSec = i; pcRender(focusId);
   if (showErr) markBad();
   if (!focusId) window.scrollTo(0, 0);
-  saveDraft();
+  scheduleSave();
 }
 
 function pcRender(focusId){
@@ -979,7 +998,7 @@ function pcRender(focusId){
   root.innerHTML = `
     <header class="pc-top"><div class="pc-in">
       <div class="brand">${logoHTML('bar-logo')}<strong>겨울특강 <em>홍보물</em> 만들기</strong><span>바이브 디자인 교육 사전 과제</span></div>
-      <div class="prog"><span><b>${pcSec + 1}</b> / ${SECTIONS.length} 단계</span><div class="bar"><i style="width:${(pcSec + 1) / SECTIONS.length * 100}%"></i></div></div>
+      <div class="prog"><span class="save-st" data-st="${saveSt[1]}">${saveSt[0]}</span><span><b>${pcSec + 1}</b> / ${SECTIONS.length} 단계</span><div class="bar"><i style="width:${(pcSec + 1) / SECTIONS.length * 100}%"></i></div></div>
     </div></header>
     <div class="pc-body pc-in">
       <aside class="pc-side">
@@ -1067,11 +1086,78 @@ mq.addEventListener('change', () => {
   rerender();
 });
 
-/* ═════════════ 임시 저장 (파일 제외) ═════════════ */
+/* ═════════════ 자동 저장 ═════════════ */
+/* 개인 링크(회원사 코드)로 들어오면 서버('작성중' 탭)에 저장해서 어느 기기에서 열어도 이어서 써요.
+   링크 없이 들어오면 이 기기 브라우저에만 저장해요(파일 제외). */
+const serverMode = () => !!(S.code && CONFIG.SCRIPT_URL && member);
+let saveT = null, saving = false, saveAgain = false, saveSt = ['', ''];
+const hhmm = () => { const d = new Date(); return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
+function setSaveStatus(t, st){ saveSt = [t, st || '']; $$('.save-st').forEach(e => { e.textContent = t; e.dataset.st = st || ''; }); }
+const currentStep = () => isPC() ? (typeof pcSec === 'number' ? firstOf(pcSec) : 'intro') : cur;
+const formOf = () => ({ academyName:S.academyName, address:S.address, addressDetail:S.addressDetail, phone:S.phone, status:S.status, courseText:S.courseText, plans:S.plans, slogan:S.slogan, emphasis:S.emphasis });
+const fileRef = x => x && x.fileId && !x.file ? { fileId:x.fileId, name:x.name || '', mimeType:x.mimeType || x.type || '', size:x.size || 0 } : null;
+const draftData = () => ({ form:formOf(), step:currentStep(), files:{ logo:fileRef(logo), courseFiles:docs.map(fileRef).filter(Boolean), photos:photos.map(fileRef).filter(Boolean) } });
+const post = async (body, keepalive) => (await fetch(CONFIG.SCRIPT_URL, { method:'POST', headers:{ 'Content-Type':'text/plain;charset=utf-8' }, body:JSON.stringify(body), keepalive:!!keepalive })).json();
+
+function scheduleSave(){
+  if (!remoteReady || cur === 'done' || pcSec === 'done') return;
+  clearTimeout(saveT);
+  if (serverMode()) { setSaveStatus('저장 중…', 'ing'); saveT = setTimeout(pushDraft, 1200); }
+  else saveT = setTimeout(saveLocal, 300);
+}
+async function pushDraft(){
+  saveT = null;
+  if (saving) { saveAgain = true; return; }
+  saving = true;
+  try {
+    const r = await post({ app:'prework', action:'draft', code:S.code, draft:draftData() });
+    if (!r.ok) throw new Error(r.error || 'save');
+    setSaveStatus(`저장됨 ${hhmm()}`, 'ok');
+  } catch (e) { console.warn(e); setSaveStatus('저장 실패', 'err'); setTimeout(scheduleSave, 5000); }
+  saving = false;
+  if (saveAgain) { saveAgain = false; pushDraft(); }
+}
+/* 창을 닫거나 다른 앱으로 넘어갈 때 기다리던 저장을 바로 보냄 */
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'hidden' || !saveT || !serverMode()) return;
+  clearTimeout(saveT); saveT = null;
+  try { post({ app:'prework', action:'draft', code:S.code, draft:draftData() }, true).catch(() => {}); } catch (e) {}
+});
+
+/* 파일은 고르는 즉시 학원 폴더에 올림 → 다른 기기에서도 보이게 */
+function uploadItem(item, kind){
+  if (!serverMode() || !item || !item.file) return;
+  item.uploading = true; item.failed = false;
+  item.promise = (async () => {
+    try {
+      const f = item.file, isImg = (f.type || '').startsWith('image/');
+      const file = kind === 'photo' ? await compressImage(f, CONFIG.PHOTO_MAX_PX, 0.85)
+        : kind === 'doc' && isImg ? await compressImage(f, CONFIG.DOC_IMG_MAX_PX, 0.9) : await raw(f);
+      const r = await post({ app:'prework', action:'upload', code:S.code, kind, file });
+      if (!r.ok || !r.file) throw new Error(r.error || 'upload');
+      Object.assign(item, { remote:true, fileId:r.file.fileId, mimeType:r.file.mimeType || item.mimeType || item.type });
+      delete item.file;
+    } catch (e) { console.warn(e); item.failed = true; toast('파일을 올리지 못했어요. 제출할 때 다시 올릴게요.'); }
+    item.uploading = false; delete item.promise;
+    refreshFileViews(); changed();
+  })();
+}
+const fileState = d => d.uploading ? '올리는 중…' : d.failed ? '제출할 때 올려요' : d.remote ? (serverMode() ? '저장됨' : '제출한 파일') : fmtSize(d.size);
+function refreshFileViews(){
+  const targets = [];
+  if (isPC()) {
+    if (typeof pcSec !== 'number') return;
+    if (pcSec === 4) { const b = $('#pcFields'); if (b) C.review.mount(b); return; }
+    ['info', 'files', 'photos'].forEach(id => { const fb = $(`#pcFields .fld[data-id="${id}"] .fb`); if (fb) targets.push([id, fb]); });
+  } else if (current && ['info', 'files', 'photos', 'review'].includes(cur)) targets.push([cur, current]);
+  targets.forEach(([id, box]) => { if (box._redraw) box._redraw(); else C[id].mount(box, 0); });
+}
+
+/* 이 기기에만 저장 (링크 없이 들어온 경우) */
 const draftKey = () => CONFIG.DRAFT_KEY + (S.code ? ':' + S.code : '');
-function saveDraft(){
-  if (cur === 'done' || pcSec === 'done' || editMode) return;
-  const step = isPC() ? (typeof pcSec === 'number' ? firstOf(pcSec) : 'intro') : cur;
+function saveLocal(){
+  if (cur === 'done' || pcSec === 'done' || editMode || serverMode()) return;
+  const step = currentStep();
   if (step === 'intro' && !hasDraft) return;
   try { localStorage.setItem(draftKey(), JSON.stringify({ t:Date.now(), step, s:S })); } catch(e) {}
 }
@@ -1090,7 +1176,7 @@ function loadDraft(){
 /* ═════════════ 회원사 정보 미리 채우기 ═════════════ */
 function applyMember(m){
   member = m;
-  if (!hasDraft) {
+  if (!hasDraft && !submission) {
     S.academyName = m.academyName || ''; S.address = m.address || ''; S.phone = fmtPhone(m.phone || '');
     if (m.slogan) S.slogan = m.slogan;
   }
@@ -1101,23 +1187,35 @@ function applyMember(m){
     logo = { url:'', name:m.logo.name || '등록된 로고', size:0, mimeType:m.logo.mimeType || '', fileId:m.logo.fileId, prefilled:true };
   }
 }
-function applySubmission(sub){
-  submission = { submitId:sub.submitId, token:sub.token, submittedAt:sub.submittedAt, updatedAt:sub.updatedAt || '' };
-  setSaved(sub.submitId, sub.token);
-  const f = sub.form || {};
+function applyForm(f){
   Object.assign(S, {
     academyName:f.academyName || '', address:f.address || '', addressDetail:f.addressDetail || '', phone:f.phone || '',
     status:f.status || null, courseText:f.courseText || '', slogan:f.slogan || '', emphasis:f.emphasis || '', editInfo:false
   });
   S.plans = (Array.isArray(f.plans) && f.plans.length ? f.plans : [{}]).map(x => Object.assign(newPlan(), x));
+}
+function applyFiles(sub){
+  logo = null;
   if (sub.logo) logo = { remote:true, fileId:sub.logo.fileId, name:sub.logo.name || '제출한 로고', size:0, mimeType:sub.logo.mimeType || '', url:sub.logo.preview || '', prefilled:false };
   docs = (sub.courseFiles || []).map(x => ({ remote:true, fileId:x.fileId, name:x.name || '제출한 파일', size:x.size || 0, type:x.mimeType || '', url:x.preview || null }));
-  photos = (sub.photos || []).map(x => ({ remote:true, fileId:x.fileId, url:x.preview || '' }));
+  photos = (sub.photos || []).map(x => ({ remote:true, fileId:x.fileId, name:x.name || '', type:x.mimeType || '', url:x.preview || '' }));
+}
+function applySubmission(sub){
+  submission = { submitId:sub.submitId, token:sub.token, submittedAt:sub.submittedAt, updatedAt:sub.updatedAt || '' };
+  setSaved(sub.submitId, sub.token);
+  applyForm(sub.form || {}); applyFiles(sub);
   hasDraft = false; savedStep = null; clearDraft();
+}
+function applyDraft(d){
+  applyForm(d.form || {});
+  const hasFiles = d.logo || (d.courseFiles || []).length || (d.photos || []).length;
+  if (hasFiles || submission) { const keep = logo; applyFiles(d); if (!logo && keep && keep.prefilled) logo = keep; }
+  savedStep = d.step && d.step !== 'intro' ? d.step : null;
+  hasDraft = !submission && !!savedStep;
 }
 async function loadRemote(){
   const saved = getSaved();
-  if (!CONFIG.SCRIPT_URL || (!S.code && !saved)) return;
+  if (!CONFIG.SCRIPT_URL || (!S.code && !saved)) { remoteReady = true; return; }
   loading = true; refresh();
   try {
     const q = 'app=prework&' + (S.code ? `code=${encodeURIComponent(S.code)}` : `sid=${encodeURIComponent(saved.sid)}&token=${encodeURIComponent(saved.token)}`);
@@ -1127,8 +1225,14 @@ async function loadRemote(){
     const out = await res.json();
     if (out.ok && out.member) applyMember(out.member);
     if (out.ok && out.submission) applySubmission(out.submission);
+    if (out.ok && out.draft && member) {
+      const subAt = submission ? new Date(submission.updatedAt || submission.submittedAt) : null;
+      if (!subAt || new Date(out.draft.updatedAt) > subAt) { applyDraft(out.draft); pendingEdit = !!submission; }
+    }
   } catch (e) { console.warn('정보를 불러오지 못했어요', e); }
-  loading = false;
+  if (!serverMode() && !submission) loadDraft();
+  loading = false; remoteReady = true;
+  if (serverMode()) setSaveStatus(hasDraft || pendingEdit ? '저장됨' : '', 'ok');
   if (submission) showDone('returning'); else rerender();
 }
 
@@ -1161,7 +1265,9 @@ const raw = async f => ({ name:f.name, mimeType:f.type || 'application/octet-str
 async function submit(){
   if (!CONFIG.SCRIPT_URL) { toast('제출 주소(SCRIPT_URL)가 아직 설정되지 않았어요.'); return; }
   const ov = $('#overlay'); ov.classList.add('on');
+  clearTimeout(saveT); saveT = null;
   try {
+    await Promise.all([logo, ...docs, ...photos].filter(x => x && x.promise).map(x => x.promise));
     const hasDocs = S.status === 'ready' || S.status === 'lastyear', hasPlan = S.status === 'planning' || S.status === 'lastyear';
     const infoEdited = !member ? null : (member.academyName || '') !== S.academyName || (member.address || '') !== S.address || fmtPhone(member.phone || '') !== S.phone || filled(S.addressDetail) || !!(logo && logo.file);
     const isEdit = !!submission;
@@ -1208,7 +1314,7 @@ async function submit(){
       (out.files.photos || []).forEach((id, i) => { if (photos[i] && id) Object.assign(photos[i], { remote:true, fileId:id }); });
       if (logo) delete logo.file; docs.forEach(d => delete d.file); photos.forEach(p => delete p.file);
     }
-    clearDraft();
+    clearDraft(); pendingEdit = false; setSaveStatus('', '');
     showDone(isEdit ? 'updated' : 'thanks');
   } catch (err) {
     console.error(err);
@@ -1223,12 +1329,12 @@ function showDone(kind){
   applyMode();
   if (isPC()) { pcRender(); window.scrollTo(0, 0); return; }
   $('#top').style.visibility = 'hidden'; $('#cta').hidden = true;
-  screen.innerHTML = doneHTML() + footerHTML(); bindDone(screen); window.scrollTo(0, 0);
+  screen.classList.add('nocta'); screen.innerHTML = doneHTML() + footerHTML(); bindDone(screen); window.scrollTo(0, 0);
 }
 
 /* ═════════════ 시작 ═════════════ */
 S.code = (new URLSearchParams(location.search).get('code') || '').trim();
-loadDraft();
+if (!S.code) loadDraft();
 rerender();
 loadRemote();
 </script>
