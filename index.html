@@ -8,7 +8,7 @@
 <!-- 링크 미리보기 (카카오톡 · 문자 · SNS) -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="클럽하와이">
-<meta property="og:title" content="겨울특강 홍보물 만들기 · 사전 과제">
+<meta property="og:title" content="겨울특강 홍보물 만들기 사전 과제 | 클럽하와이">
 <meta property="og:description" content="교육 당일 바로 홍보물을 만들 수 있도록 학원 자료를 미리 보내 주세요.">
 <meta property="og:url" content="https://clubhawaii.github.io/winter-edu/">
 <meta property="og:image" content="https://clubhawaii.github.io/winter-edu/og-image.png">
@@ -500,10 +500,11 @@ const logoIsImg = () => !!(logo && logo.url && (logo.mimeType || '').startsWith(
 /* ---------- 질문 정의 (모바일·PC 공통) ---------- */
 const C = {
   info: {
-    q: () => S.prefilled ? '<em>학원 정보</em>가 맞는지<br>확인해주세요' : '<em>학원 정보</em>를 알려주세요',
-    qsub: () => S.prefilled ? '미리 채워 두었어요. 홍보물에 이 정보가 그대로 들어가요.' : '홍보물에 들어갈 정보예요.',
+    q: () => C.info.card() ? '<em>학원 정보</em>가 맞는지<br>확인해주세요' : '<em>학원 정보</em>를 알려주세요',
+    qsub: () => C.info.card() ? '미리 채워 두었어요. 홍보물에 이 정보가 그대로 들어가요.'
+      : S.prefilled && member && filled(member.academyName) ? '학원명은 미리 넣어 두었어요. 홍보물에 이 정보가 그대로 들어가요.' : '홍보물에 들어갈 정보예요.',
     title: '', err: '빠진 학원 정보를 채워주세요.',
-    card: () => S.prefilled && !S.editInfo && filled(S.academyName) && filled(S.address) && filled(S.phone),
+    card: () => !!(S.prefilled && member && filled(member.address) && filled(member.phone)) && !S.editInfo && filled(S.academyName) && filled(S.address) && filled(S.phone),
     mount(box){
       box.innerHTML = ''; box._redraw = null;
       if (C.info.card()) {
@@ -814,7 +815,7 @@ function introParts(){
       <div><dt>장소</dt><dd>${esc(CONFIG.EDU_PLACE)}</dd></div>
       ${CONFIG.DEADLINE ? `<div class="dl"><dt>제출 기한</dt><dd>${esc(CONFIG.DEADLINE)}</dd></div>` : ''}</dl>`,
     prep: `<div class="prep"><h2>해 주실 일은 네 가지예요</h2><ul>
-      <li><i>1</i>${S.prefilled ? '미리 채워 둔 학원 정보 확인하기' : '학원 정보 입력하기'}</li>
+      <li><i>1</i>학원 로고·주소·상담 전화번호 입력하기</li>
       <li><i>2</i>겨울방학 특강 준비 상황 알려주기</li>
       <li><i>3</i>학원 내부와 수업 사진 ${CONFIG.PHOTO_MIN}~${CONFIG.PHOTO_MAX}장 올리기</li>
       <li><i>4</i>학원 슬로건과 강조하고 싶은 말 적기</li></ul></div>`,
@@ -1003,7 +1004,7 @@ function pcRender(focusId){
     <div class="pc-body pc-in">
       <aside class="pc-side">
         <ol class="pc-nav" id="pcNav"></ol>
-        <div class="side-note">${CONFIG.DEADLINE ? `<b>제출 기한 ${esc(CONFIG.DEADLINE)}</b>` : ''}작성 중인 내용은 이 기기에 자동 저장돼요. 파일은 다시 올려야 해요.</div>
+        <div class="side-note">${CONFIG.DEADLINE ? `<b>제출 기한 ${esc(CONFIG.DEADLINE)}</b>` : ''}${serverMode() ? '작성 중인 내용과 파일은 자동 저장돼요. 이 링크를 다른 기기에서 열어도 이어서 쓸 수 있어요.' : '작성 중인 내용은 이 기기에 자동 저장돼요. 파일은 다시 올려야 해요.'}</div>
       </aside>
       <main class="pc-main">
         <div class="sec-h"><h1>${sec.h()}</h1>${sec.sub() ? `<p>${sec.sub()}</p>` : ''}</div>
