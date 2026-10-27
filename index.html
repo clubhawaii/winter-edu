@@ -237,15 +237,22 @@ textarea.inp{height:auto;min-height:120px;padding:15px 16px;line-height:1.55;res
 @keyframes lbmove{from{left:-40%}to{left:100%}}
 body.is-loading{padding-top:70px}
 body.is-loading #screen,body.is-loading #pc{opacity:.4;pointer-events:none;transition:opacity .2s}
-.handout{display:flex;align-items:center;gap:14px;margin-top:24px;padding:16px 18px;border-radius:12px;background:var(--ink);color:#fff;text-decoration:none;text-align:left;transition:transform .15s,background .15s}
-.handout:hover{background:#000;transform:translateY(-1px)}
+.handout{display:flex;align-items:center;gap:14px;margin-top:24px;padding:16px 18px;border-radius:12px;background:#fff;border:1.5px solid var(--pink);color:var(--ink);text-decoration:none;text-align:left;transition:background .15s}
+.handout:hover{background:var(--soft)}
 .handout .ho-ic{flex:0 0 44px;height:44px;border-radius:10px;background:var(--pink);display:grid;place-items:center}
 .handout .ho-ic svg{width:24px;height:24px}
 .handout .ho-t{flex:1;min-width:0}
-.handout small{display:block;font-size:12px;font-weight:600;color:#FF9CC4;letter-spacing:.02em}
-.handout strong{display:block;margin-top:2px;font-size:17px;font-weight:800;line-height:1.35}
-.handout .ho-go{flex:0 0 auto;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.12);font-size:13px;font-weight:700;white-space:nowrap}
-.done .handout{margin-top:28px}
+.handout strong{display:block;font-size:17px;font-weight:800;line-height:1.35}
+.handout small{display:block;margin-top:2px;font-size:13px;font-weight:500;color:var(--gray)}
+.handout .ho-go{flex:0 0 auto;padding:8px 12px;border-radius:8px;background:var(--pink);color:#fff;font-size:13px;font-weight:700;white-space:nowrap}
+.lec{margin-top:28px;padding:24px 22px 22px;border-radius:16px;background:var(--soft);border:1.5px solid var(--pink);color:var(--ink);text-align:left}
+.lec-top{position:relative;display:flex;align-items:center;gap:14px}
+.lec-ic{flex:0 0 52px;height:52px;border-radius:14px;background:var(--pink);display:grid;place-items:center}
+.lec-ic svg{width:28px;height:28px}
+.lec h2{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.3}
+.done .lec .lec-sub{margin-top:2px;font-size:15px;color:var(--gray);line-height:1.5}
+.lec-btn{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:56px;margin-top:20px;border-radius:12px;background:var(--pink);color:#fff;font-size:17px;font-weight:800;text-decoration:none;transition:background .15s,transform .15s}
+.lec-btn:hover{background:var(--pink-dark)}
 .kit .kit-note{margin-top:12px;font-size:13px;color:var(--sub);line-height:1.6}
 .btn-kit{width:100%;height:54px;margin-top:16px;border:0;border-radius:var(--r);background:var(--pink);color:#fff;font-size:16px;font-weight:700;transition:background .15s}
 .btn-kit:hover:not(:disabled){background:var(--pink-dark)}
@@ -896,31 +903,32 @@ const extOf = (name, mime) => { const m = String(name || '').match(/\.([A-Za-z0-
 const kitName = () => (S.academyName || '학원').trim().replace(/[\\/:*?"<>|]/g, '');
 function kitFiles(){
   const an = kitName(), list = [{ kind:'xls', name:`${an}_학원자료.xlsx`, desc:'학원 정보 · 특강 · 슬로건 정리 (엑셀)' }];
-  if (logo) list.push({ kind:'logo', item:logo, name:`${an}_로고.${extOf(logo.name, logo.mimeType)}`, desc:'학원 로고' });
-  photos.forEach((p, i) => list.push({ kind:'photo', item:p, name:`${an}_사진${i + 1}.${extOf(p.name, p.type)}`, desc:'학원 사진' }));
-  docs.forEach((d, i) => list.push({ kind:'doc', item:d, name:`${an}_특강자료${docs.length > 1 ? i + 1 : ''}.${extOf(d.name, d.type)}`, desc:S.status === 'lastyear' ? '작년 특강 자료' : '특강 안내 자료' }));
+  if (logo) list.push({ kind:'logo', item:logo, name:`${an}_로고.${extOf(logo.name, logo.mimeType)}`, desc:'학원 로고', label:'로고 파일' });
+  photos.forEach((p, i) => list.push({ kind:'photo', item:p, name:`${an}_사진${i + 1}.${extOf(p.name, p.type)}`, desc:'학원 사진', label:`사진${i + 1} 파일` }));
+  docs.forEach((d, i) => list.push({ kind:'doc', item:d, name:`${an}_특강자료${docs.length > 1 ? i + 1 : ''}.${extOf(d.name, d.type)}`, desc:S.status === 'lastyear' ? '작년 특강 자료' : '특강 안내 자료', label:`${S.status === 'lastyear' ? '작년 특강 자료' : '특강 안내 자료'}${docs.length > 1 ? i + 1 : ''} 파일` }));
   return list;
 }
 /* 학원자료 내용 — [종류, 값, 값] 줄 목록. 같은 목록으로 엑셀 파일과 미리 보기 글을 만듦 */
+const PHOTO_COLS = 3;
 function kitRows(){
   const an = kitName(), files = kitFiles(), cur = practice && practice.course;
-  const R = [['sec', '학원 기본 정보'], ['kv', '학원명', an], ['kv', '주소', [S.address, S.addressDetail].filter(filled).map(x => x.trim()).join(' ')], ['kv', '상담 전화', S.phone],
-    ['sec', '학원 메시지'], ['kv', '슬로건 (홍보물의 큰 문구)', S.slogan.trim()], ['kv', '강조하고 싶은 말', S.emphasis.trim()]];
-  if (cur) R.push(['sec', '겨울방학 특강 (클럽하와이 정리)'], ['text', cur.trim()]);
-  if (S.status === 'planning' || S.status === 'lastyear') {
-    const tb = (v, t) => t ? '미정' : filled(v) ? v.trim() : '';
-    S.plans.forEach((P, i) => {
-      R.push(['sec', (S.status === 'lastyear' ? '올해 겨울방학 특강 계획' : '겨울방학 특강') + (S.plans.length > 1 ? ` ${i + 1}` : '')]);
-      R.push(['kv', '과목', P.subjects.map(x => x === '기타' && filled(P.subjectEtc) ? P.subjectEtc.trim() : x).join(' · ')],
-        ['kv', '대상', P.targets.join(' · ')], ['kv', '기간', tb(P.period, P.periodTbd)], ['kv', '요일', tb(P.days.join(' · '), P.daysTbd)],
-        ['kv', '시간', tb(P.time, P.timeTbd)], ['kv', '수강료', tb(P.fee, P.feeTbd)]);
-      if (filled(P.memo)) R.push(['kv', '수업 내용', P.memo.trim()]);
-    });
-  }
-  if (filled(S.courseText)) R.push(['sec', '원장님이 붙여 넣은 특강 안내 글'], ['text', S.courseText.trim()]);
-  R.push(['sec', '함께 올리는 파일']);
-  files.slice(1).forEach(f => R.push(['kv', f.name, f.desc]));
-  return R.filter(r => r[0] !== 'kv' || filled(r[2]));   // 원장님이 안 적은 칸은 아예 넣지 않음
+  const R = [['kv', '학원명', an], ['kv', '주소', [S.address, S.addressDetail].filter(filled).map(x => x.trim()).join(' ')], ['kv', '상담 전화번호', S.phone],
+    ['kv', '슬로건', S.slogan.trim()], ['kv', '강조하고 싶은 말', S.emphasis.trim()]];
+  const plans = (S.status === 'planning' || S.status === 'lastyear') ? S.plans : [];
+  const list = plans.length ? plans : [null];
+  const tb = (v, t) => t ? '미정' : filled(v) ? v.trim() : '';
+  list.forEach((P, i) => {
+    const pre = list.length > 1 ? `특강 ${i + 1} ` : '';
+    R.push(['kv', pre + '과목', P ? P.subjects.map(x => x === '기타' && filled(P.subjectEtc) ? P.subjectEtc.trim() : x).join(' · ') : ''],
+      ['kv', pre + '대상', P ? P.targets.join(' · ') : ''], ['kv', pre + '기간', P ? tb(P.period, P.periodTbd) : ''], ['kv', pre + '요일', P ? tb(P.days.join(' · '), P.daysTbd) : ''],
+      ['kv', pre + '시간', P ? tb(P.time, P.timeTbd) : ''], ['kv', pre + '수강료', P ? tb(P.fee, P.feeTbd) : ''], ['kv', pre + '수업 내용', P && filled(P.memo) ? P.memo.trim() : '']);
+  });
+  R.push(['kv', '특강 안내 글', filled(S.courseText) ? S.courseText.trim() : ''], ['kv', '특강 정리 (클럽하와이)', cur ? cur.trim() : '']);
+  const lg = files.find(f => f.kind === 'logo'), ph = files.filter(f => f.kind === 'photo'), dc = files.filter(f => f.kind === 'doc');
+  R.push(['kv', '로고 파일', lg ? lg.name : '']);
+  for (let i = 0; i < PHOTO_COLS; i++) R.push(['kv', `사진${i + 1} 파일`, ph[i] ? ph[i].name : '']);
+  R.push(['kv', '특강 자료 파일', dc.map(f => f.name).join('\n')]);
+  return R;   // 원장님이 안 적은 칸은 빈 값 그대로
 }
 function rowsText(R){
   const L = [];
@@ -928,7 +936,7 @@ function rowsText(R){
     if (t === 'title') L.push(`[${a}]`, '');
     else if (t === 'note') L.push(a);
     else if (t === 'sec') L.push('', '', `■ ${a}`);
-    else if (t === 'kv') L.push(`${a}: ${b || ''}`);
+    else if (t === 'kv') { if (filled(b)) L.push(`${a}: ${b}`); }
     else L.push(a);
   });
   return L.join('\n').trim() + '\n';
@@ -944,7 +952,7 @@ function loadExcel(){
 }
 /** 줄 목록 → 엑셀(.xlsx). 엑셀을 못 불러오면 같은 내용의 글 파일(.txt)로 */
 /** 줄 목록 → AI가 바로 읽는 표 형태의 엑셀
- *  · 1행은 머리글(항목 | 내용), 2행부터 한 줄에 정보 하나
+ *  · 엑셀에선 1행이 항목 이름, 2행이 그 학원의 내용 (학원 한 곳 = 한 줄)
  *  · 병합한 칸 · 빈 줄 · 제목 줄이 없어서 표로 그대로 읽혀요 */
 function rowsTable(R){
   const T = []; let sec = '';
@@ -958,19 +966,19 @@ function rowsTable(R){
 }
 async function rowsFile(R){
   try { await loadExcel(); } catch (e) { return new Blob(['﻿' + rowsText(R)], { type:'text/plain;charset=utf-8' }); }
+  const T = rowsTable(R), heads = T.map(r => r[0]), vals = T.map(r => filled(r[1]) ? r[1] : null);
   const wb = new ExcelJS.Workbook(); wb.creator = '클럽하와이';
-  const ws = wb.addWorksheet('학원자료', { views:[{ state:'frozen', ySplit:1 }], pageSetup:{ paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
-  ws.columns = [{ header:'항목', key:'k', width:30 }, { header:'내용', key:'v', width:80 }];
-  const lines = (v, w) => String(v || '').split('\n').reduce((n, l) => n + Math.max(1, Math.ceil(l.length / w)), 0);
-  rowsTable(R).forEach(r => {
-    const row = ws.addRow(r);
-    row.alignment = { vertical:'top', wrapText:true };
-    row.height = Math.max(20, 16 * Math.max(lines(r[0], 15), lines(r[1], 38)) + 4);
-  });
-  const head = ws.getRow(1);
-  head.font = { bold:true }; head.height = 22;
-  head.eachCell(c => { c.fill = { type:'pattern', pattern:'solid', fgColor:{ argb:'FFEDEDED' } }; c.alignment = { vertical:'middle' }; });
-  ws.autoFilter = 'A1:B1';
+  const ws = wb.addWorksheet('학원자료', { views:[{ state:'frozen', ySplit:1 }], pageSetup:{ paperSize:9, orientation:'landscape', fitToPage:true, fitToWidth:1, fitToHeight:0 } });
+  // 1행 제목, 2행 내용 — 학원 한 곳이 한 줄
+  ws.addRow(heads); ws.addRow(vals);
+  const len = v => [...String(v || '')].reduce((n, ch) => n + (/[ㄱ-힣]/.test(ch) ? 2 : 1), 0);
+  const widths = T.map(([h, v]) => Math.min(48, Math.max(12, len(h) + 4, Math.min(len(v), 48) + 2)));
+  widths.forEach((w, i) => { ws.getColumn(i + 1).width = w; });
+  const head = ws.getRow(1), row = ws.getRow(2);
+  head.font = { bold:true }; head.height = 22; head.alignment = { vertical:'middle', wrapText:true };
+  head.eachCell(c => { c.fill = { type:'pattern', pattern:'solid', fgColor:{ argb:'FFEDEDED' } }; });
+  row.alignment = { vertical:'top', wrapText:true };
+  row.height = Math.max(20, 16 * Math.max(...T.map(([, v], i) => String(v || '').split('\n').reduce((n, l) => n + Math.max(1, Math.ceil(len(l) / (widths[i] - 1))), 0))) + 4);
   return new Blob([await wb.xlsx.writeBuffer()], { type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 }
 const fileName = (f, blob) => /^text\//.test(blob.type) ? f.name.replace(/\.xlsx$/, '.txt') : f.name;
@@ -1036,15 +1044,13 @@ function bindKit(root){
 /* ═════════════ 제출 안 한 학원 — 실습용 임시 데이터 ═════════════ */
 const TEMP_NAME = '클럽하와이';
 const TEMP_ROWS = [
-  ['sec', '학원 기본 정보'], ['kv', '학원명', TEMP_NAME], ['kv', '주소', '서울시 중구 한강대로 000 (예시 주소)'], ['kv', '상담 전화', '02-000-0000 (예시 번호)'],
-  ['sec', '학원 메시지'], ['kv', '슬로건 (홍보물의 큰 문구)', '생각하는 힘을 키우는 수학'], ['kv', '강조하고 싶은 말', '겨울방학 4주, 중학 수학의 첫 단원을 개념부터 탄탄하게 다집니다.'],
-  ['sec', '겨울방학 특강'], ['kv', '과목', '수학'], ['kv', '대상', '예비 중1'], ['kv', '기간', '1월 5일 ~ 1월 30일 (4주)'], ['kv', '요일', '월 · 수 · 금'],
+  ['kv', '학원명', TEMP_NAME], ['kv', '주소', '서울시 중구 한강대로 000 (예시 주소)'], ['kv', '상담 전화번호', '02-000-0000 (예시 번호)'],
+  ['kv', '슬로건', '생각하는 힘을 키우는 수학'], ['kv', '강조하고 싶은 말', '겨울방학 4주, 중학 수학의 첫 단원을 개념부터 탄탄하게 다집니다.'],
+  ['kv', '과목', '수학'], ['kv', '대상', '예비 중1'], ['kv', '기간', '1월 5일 ~ 1월 30일 (4주)'], ['kv', '요일', '월 · 수 · 금'],
   ['kv', '시간', '오후 2시 ~ 오후 5시'], ['kv', '수강료', '미정'], ['kv', '수업 내용', '초등 수학 총정리 후 중1 1학기 정수와 유리수 · 문자와 식 선행'],
-  ['sec', '함께 올리는 파일'],
-  ['kv', `${TEMP_NAME}_로고.png`, '학원 로고'],
-  ['kv', `${TEMP_NAME}_사진1.jpg`, '학원 사진: 강의실 (실습용 샘플 일러스트)'],
-  ['kv', `${TEMP_NAME}_사진2.jpg`, '학원 사진: 자습실 (실습용 샘플 일러스트)'],
-  ['kv', `${TEMP_NAME}_사진3.jpg`, '학원 사진: 입구 · 안내 데스크 (실습용 샘플 일러스트)']
+  ['kv', '특강 안내 글', ''], ['kv', '특강 정리 (클럽하와이)', ''],
+  ['kv', '로고 파일', `${TEMP_NAME}_로고.png`], ['kv', '사진1 파일', `${TEMP_NAME}_사진1.jpg`], ['kv', '사진2 파일', `${TEMP_NAME}_사진2.jpg`], ['kv', '사진3 파일', `${TEMP_NAME}_사진3.jpg`],
+  ['kv', '특강 자료 파일', '']
 ];
 const TEMP_TEXT = rowsText(TEMP_ROWS);
 /* 실습용 샘플 학원 사진 (일러스트 3장 — 강의실 · 자습실 · 입구 안내 데스크) */
@@ -1065,12 +1071,12 @@ function tempHTML(){
   if (!showTemp()) return '';
   const files = tempFiles();
   return `<section class="kit temp">
-    <h2>원장님 사전 과제 제출이 되지 않았어요.</h2>
-    <p class="kit-lead">실습 진행할 수 있는 임시 데이터 파일로 진행해주세요.</p>
+    <h2>클럽하와이에서 임의로 임시 데이터를 넣어두었습니다.</h2>
+    <p class="kit-lead">학원에 맞는 데이터로 수정해서 최종 완성하시길 바랍니다.</p>
     <button type="button" class="btn-kit" id="tmpAll">임시 실습 자료 모두 받기 (${files.length}개)</button>
     <ul class="kit-files">${files.map((f, i) => `<li>${f.kind === 'xls' ? '<span class="tx xl">XLSX</span>' : `<img class="th${f.kind === 'logo' ? ' lg' : ''}" src="${typeof f.url === 'function' ? f.url() : f.url}" alt="">`}<div class="mt"><strong>${esc(f.name)}</strong><small>${esc(f.desc)}</small></div><button type="button" data-tmp="${i}">받기</button></li>`).join('')}</ul>
     <details class="kit-txt"><summary>임시 학원자료 내용 미리 보기</summary><pre>${esc(TEMP_TEXT)}</pre></details>
-    <p class="kit-note">교육 날 노트북에서 받아 Claude 대화창에 한 번에 올려 주세요. 교육 전까지 사전 과제를 제출하시면 원장님 학원 자료로 실습할 수 있어요.</p>
+    <p class="kit-note">받은 파일을 Claude 대화창에 한 번에 올려 주세요.</p>
   </section>`;
 }
 async function tempSave(i, btn){
@@ -1093,9 +1099,16 @@ function bindTemp(root){
   });
 }
 
+const DOC_IC = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>';
+/* 시작 화면용 — 한 줄 카드 */
 const handoutHTML = () => CONFIG.HANDOUT_URL ? `<a class="handout" href="${CONFIG.HANDOUT_URL}" target="_blank" rel="noopener">
-    <span class="ho-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
-    <span class="ho-t"><small>강의 자료</small><strong>바이브 디자인 워크숍 핸드아웃</strong></span><span class="ho-go">열기 ↗</span></a>` : '';
+    <span class="ho-ic">${DOC_IC}</span>
+    <span class="ho-t"><strong>강의 자료</strong><small>우리 학원 특강 홍보물, AI로 직접 만들기</small></span><span class="ho-go">열기 ↗</span></a>` : '';
+/* 제출 완료 화면용 — 크게, 짧게 */
+const lectureHTML = () => CONFIG.HANDOUT_URL ? `<section class="lec">
+    <div class="lec-top"><span class="lec-ic">${DOC_IC}</span><div><h2>강의 자료</h2><p class="lec-sub">수업 중 이 문서만 따라오세요.</p></div></div>
+    <a class="lec-btn" href="${CONFIG.HANDOUT_URL}" target="_blank" rel="noopener">강의 자료 열기 ↗</a>
+  </section>` : '';
 
 function doneHTML(){
   const when = submission && (submission.updatedAt || submission.submittedAt);
@@ -1108,7 +1121,7 @@ function doneHTML(){
   <div class="ok">${CHECK.replace('stroke-width="3.2"','stroke-width="2.8"')}</div>
   <h1>${title}</h1>
   <p>${lead}</p>
-  ${handoutHTML()}
+  ${lectureHTML()}
   ${pendingEdit ? '<p class="pend">제출한 뒤 고치던 내용이 저장돼 있어요. ‘수정 내용 제출하기’를 눌러야 반영돼요.</p>' : ''}
   ${kitHTML()}
   <div class="edit-box"><button type="button" class="btn-edit" id="editBtn">${pendingEdit ? '고치던 내용 이어서 하기' : '제출한 내용 수정하기'}</button><p>${where}</p></div>
