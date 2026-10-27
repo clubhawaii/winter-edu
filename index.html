@@ -219,6 +219,28 @@ textarea.inp{height:auto;min-height:120px;padding:15px 16px;line-height:1.55;res
 .edit-box p{margin-top:10px!important;font-size:13px!important;color:var(--sub)!important}
 .rv .thumbs .ph{width:56px;height:56px;border-radius:6px;background:#EDEDED}
 
+/* 실습 자료 */
+.kit{margin-top:32px;padding:22px 18px 18px;border:1.5px solid var(--ink);border-radius:12px;text-align:left}
+.kit h2{font-size:19px;font-weight:800;letter-spacing:-.02em}
+.done .kit .kit-lead{margin-top:6px;font-size:14px;color:var(--gray);line-height:1.6}
+.btn-kit{width:100%;height:54px;margin-top:16px;border:0;border-radius:var(--r);background:var(--pink);color:#fff;font-size:16px;font-weight:700;transition:background .15s}
+.btn-kit:hover:not(:disabled){background:var(--pink-dark)}
+.btn-kit:disabled{opacity:.7}
+.kit-files{list-style:none;margin:14px 0 0;padding:0;border-top:1px solid var(--line)}
+.kit-files li{display:flex;align-items:center;gap:12px;padding:10px 2px;border-bottom:1px solid var(--line)}
+.kit-files .th{flex:0 0 44px;width:44px;height:44px;border-radius:6px;object-fit:cover;background:var(--checker)}
+.kit-files .th.lg{object-fit:contain}
+.kit-files .tx{flex:0 0 44px;height:44px;border-radius:6px;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:800;letter-spacing:.04em}
+.kit-files .mt{flex:1;min-width:0}
+.kit-files strong{display:block;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kit-files small{display:block;font-size:12px;color:var(--sub)}
+.kit-files button{flex:0 0 auto;height:34px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:13px;font-weight:700}
+.kit-files button:hover{border-color:var(--ink)}
+.kit-txt{margin-top:14px}
+.kit-txt summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--gray)}
+.kit-txt pre{margin-top:10px;max-height:320px;overflow:auto;padding:14px;border-radius:8px;background:#F7F7F7;font-family:var(--sans);font-size:13px;line-height:1.65;white-space:pre-wrap;word-break:keep-all}
+.kit-txt .link{margin-top:8px;font-size:13px}
+
 .overlay{position:fixed;inset:0;z-index:20;display:none;place-items:center;background:rgba(255,255,255,.94);text-align:center;padding:24px}
 .overlay.on{display:grid}
 .spin{width:40px;height:40px;margin:0 auto 18px;border:4px solid #F0F0F0;border-top-color:var(--pink);border-radius:50%;animation:spin .9s linear infinite}
@@ -836,6 +858,129 @@ const startLabel = () => loading ? '학원 정보를 불러오는 중이에요' 
 const footerHTML = () => `<footer class="site-foot"><p class="copy">ⓒ 2021 클럽하와이. All rights reserved.</p></footer>`;
 const logoHTML = (cls = 'brand-logo') => `<img class="${cls}" src="${LOGO_SRC}" alt="CLUB HAWAII">`;
 const fmtDate = t => { const d = new Date(t); return isNaN(d) ? '' : `${d.getMonth() + 1}월 ${d.getDate()}일 ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
+/* ═════════════ 실습 자료 (제출한 내용 → Claude에 올릴 파일 묶음) ═════════════ */
+let practice = null, kitColor = '';
+const extOf = (name, mime) => { const m = String(name || '').match(/\.([A-Za-z0-9]{2,5})$/); if (m) return m[1].toLowerCase(); return ({ 'image/png':'png', 'image/jpeg':'jpg', 'image/webp':'webp', 'image/svg+xml':'svg', 'application/pdf':'pdf' })[mime] || 'jpg'; };
+const kitName = () => (S.academyName || '학원').trim().replace(/[\\/:*?"<>|]/g, '');
+function kitFiles(){
+  const an = kitName(), list = [{ kind:'txt', name:`${an}_학원자료.txt`, desc:'학원 정보 · 특강 · 슬로건 정리' }];
+  if (logo) list.push({ kind:'logo', item:logo, name:`${an}_로고.${extOf(logo.name, logo.mimeType)}`, desc:'학원 로고' });
+  photos.forEach((p, i) => list.push({ kind:'photo', item:p, name:`${an}_사진${i + 1}.${extOf(p.name, p.type)}`, desc:'학원 사진' }));
+  docs.forEach((d, i) => list.push({ kind:'doc', item:d, name:`${an}_특강자료${docs.length > 1 ? i + 1 : ''}.${extOf(d.name, d.type)}`, desc:S.status === 'lastyear' ? '작년 특강 자료' : '특강 안내 자료' }));
+  return list;
+}
+function kitText(){
+  const an = kitName(), files = kitFiles();
+  const L = [`[겨울방학 특강 홍보물 제작 자료] ${an}`, '',
+    '이 파일은 겨울방학 특강 홍보물(카드뉴스 · 모집 페이지)을 만들 때 쓰는 학원 자료입니다.',
+    '· 아래에 적힌 내용만 사용해 주세요. 적혀 있지 않은 정보(수강료 · 합격 실적 · 후기 · 할인 등)는 만들어 넣지 마세요.',
+    "· '미정'인 항목은 홍보물에 넣지 말고, 꼭 필요한 자리에는 '상담 시 안내'로 적어 주세요.",
+    '· 학원명 · 전화번호 · 주소는 아래 표기 그대로 써 주세요.', '', ''];
+  L.push('■ 학원 기본 정보', `학원명: ${an}`, `주소: ${[S.address, S.addressDetail].filter(filled).map(x => x.trim()).join(' ')}`, `상담 전화: ${S.phone}`, '', '');
+  L.push('■ 슬로건 (홍보물의 큰 문구)', S.slogan.trim(), '', '');
+  L.push('■ 강조하고 싶은 말', S.emphasis.trim(), '', '');
+  if (practice && practice.course) L.push('■ 겨울방학 특강 (클럽하와이가 안내 자료를 보고 정리한 내용)', practice.course.trim(), '', '');
+  if (S.status === 'planning' || S.status === 'lastyear') {
+    L.push(S.status === 'lastyear' ? '■ 올해 겨울방학 특강 계획' : '■ 겨울방학 특강');
+    const tb = (v, t) => t || !filled(v) ? '미정 (홍보물에 넣지 않음)' : v.trim();
+    S.plans.forEach((P, i) => {
+      if (S.plans.length > 1) L.push(`[특강 ${i + 1}]`);
+      L.push(`과목: ${P.subjects.map(x => x === '기타' && filled(P.subjectEtc) ? P.subjectEtc.trim() : x).join(' · ') || '미정'}`,
+        `대상: ${P.targets.join(' · ') || '미정'}`, `기간: ${tb(P.period, P.periodTbd)}`, `요일: ${tb(P.days.join(' · '), P.daysTbd)}`,
+        `시간: ${tb(P.time, P.timeTbd)}`, `수강료: ${tb(P.fee, P.feeTbd)}`);
+      if (filled(P.memo)) L.push(`수업 내용: ${P.memo.trim()}`);
+      L.push('');
+    });
+    if (S.status === 'lastyear' && !(practice && practice.course)) L.push('함께 올리는 작년 특강 자료는 분위기 · 구성 참고용이에요. 날짜 · 시간 · 수강료는 위 올해 계획을 기준으로 해 주세요.');
+    L.push('');
+  } else if (S.status === 'ready' && !(practice && practice.course)) {
+    L.push('■ 겨울방학 특강', '특강 내용은 함께 올리는 특강 안내 자료' + (filled(S.courseText) ? '와 아래 안내 글' : '') + '을 보고 정리해 주세요. 자료에 없는 내용은 만들지 마세요.', '', '');
+  }
+  if (filled(S.courseText)) L.push('■ 원장님이 붙여 넣은 특강 안내 글', S.courseText.trim(), '', '');
+  L.push('■ 함께 올리는 파일');
+  files.slice(1).forEach(f => L.push(`${f.name} — ${f.desc}${f.kind === 'logo' && kitColor ? ` (로고 색 ${kitColor})` : ''}`));
+  return L.join('\n').replace(/\n{4,}/g, '\n\n\n') + '\n';
+}
+function calcLogoColor(){
+  if (kitColor || !logo || !logo.url || !logoIsImg()) return;
+  const im = new Image();
+  im.onload = () => {
+    try {
+      const c = document.createElement('canvas'), w = 120, h = Math.max(1, Math.round(120 * im.naturalHeight / im.naturalWidth));
+      c.width = w; c.height = h; const x = c.getContext('2d'); x.drawImage(im, 0, 0, w, h);
+      const d = x.getImageData(0, 0, w, h).data, cnt = {};
+      for (let i = 0; i < d.length; i += 4) {
+        if (d[i + 3] < 200 || (d[i] > 235 && d[i + 1] > 235 && d[i + 2] > 235)) continue;
+        const k = [d[i] >> 4, d[i + 1] >> 4, d[i + 2] >> 4].join(',');
+        const e = cnt[k] || (cnt[k] = [0, 0, 0, 0]); e[0]++; e[1] += d[i]; e[2] += d[i + 1]; e[3] += d[i + 2];
+      }
+      const top = Object.values(cnt).sort((a, b) => b[0] - a[0])[0]; if (!top) return;
+      kitColor = '#' + [1, 2, 3].map(j => Math.round(top[j] / top[0]).toString(16).padStart(2, '0')).join('').toUpperCase();
+      const pre = $('#kitPre'); if (pre) pre.textContent = kitText();
+    } catch (e) {}
+  };
+  im.src = logo.url;
+}
+function kitHTML(){
+  const files = kitFiles();
+  const thumb = f => f.kind === 'txt' ? '<span class="tx">TXT</span>'
+    : f.item.url && /^image\//.test(f.item.mimeType || f.item.type || 'image/') && f.kind !== 'doc' ? `<img class="th${f.kind === 'logo' ? ' lg' : ''}" src="${f.item.url}" alt="">`
+    : `<span class="tx">${esc(extOf(f.name).toUpperCase())}</span>`;
+  return `<section class="kit">
+    <h2>교육 날 쓸 실습 자료</h2>
+    <p class="kit-lead">보내주신 내용으로 정리해 두었어요. 교육 날 <b>노트북에서 이 링크를 열고</b> 아래 파일을 모두 받아, Claude 대화창에 한 번에 올려 주세요.</p>
+    <button type="button" class="btn-kit" id="kitAll">실습 자료 모두 받기 (${files.length}개)</button>
+    <ul class="kit-files">${files.map((f, i) => `<li>${thumb(f)}<div class="mt"><strong>${esc(f.name)}</strong><small>${esc(f.desc)}</small></div><button type="button" data-kit="${i}">받기</button></li>`).join('')}</ul>
+    <details class="kit-txt"><summary>학원자료 내용 미리 보기</summary><pre id="kitPre">${esc(kitText())}</pre><button type="button" class="link" id="kitCopy">글 복사하기</button></details>
+  </section>`;
+}
+const b64Blob = (b64, type) => { const bin = atob(b64), a = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i); return new Blob([a], { type }); };
+async function kitBlob(f){
+  if (f.kind === 'txt') return new Blob(['﻿' + kitText()], { type:'text/plain;charset=utf-8' });
+  const it = f.item;
+  if (it.file) return it.file;
+  if (it.fileId && CONFIG.SCRIPT_URL && (S.code || submission)) {
+    try {
+      const who = S.code ? `code=${encodeURIComponent(S.code)}` : `sid=${encodeURIComponent(submission.submitId)}&token=${encodeURIComponent(submission.token)}`;
+      const out = await (await fetch(`${CONFIG.SCRIPT_URL}?app=prework&file=${encodeURIComponent(it.fileId)}&${who}`)).json();
+      if (out.ok && out.data) return b64Blob(out.data, out.mimeType || '');
+    } catch (e) { console.warn(e); }
+  }
+  if (it.url && f.kind !== 'doc') return await (await fetch(it.url)).blob();   // 원본을 못 받으면 미리보기 이미지라도
+  throw new Error('no file');
+}
+function saveBlob(blob, name){
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+}
+async function kitSave(i, btn){
+  const f = kitFiles()[i], label = btn.textContent;
+  btn.disabled = true; btn.textContent = '받는 중…';
+  try { saveBlob(await kitBlob(f), f.name); btn.textContent = '받았어요'; }
+  catch (e) { toast(`${f.name} 파일을 받지 못했어요. 잠시 뒤 다시 눌러주세요.`); btn.textContent = label; }
+  finally { btn.disabled = false; }
+  return btn.textContent === '받았어요';
+}
+function bindKit(root){
+  calcLogoColor();
+  $$('[data-kit]', root).forEach(b => b.addEventListener('click', () => kitSave(+b.dataset.kit, b)));
+  const all = $('#kitAll', root);
+  if (all) all.addEventListener('click', async () => {
+    const btns = $$('[data-kit]', root), label = all.textContent; let ok = 0;
+    all.disabled = true;
+    for (let i = 0; i < btns.length; i++) {
+      all.textContent = `받는 중… ${i + 1} / ${btns.length}`;
+      if (await kitSave(i, btns[i])) ok++;
+      await new Promise(r => setTimeout(r, 450));
+    }
+    all.disabled = false; all.textContent = ok === btns.length ? '모두 받았어요 · 다시 받기' : label;
+  });
+  const cp = $('#kitCopy', root);
+  if (cp) cp.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(kitText()); toast('학원자료 글을 복사했어요.'); } catch (e) { toast('복사하지 못했어요. 글을 길게 눌러 직접 복사해 주세요.'); }
+  });
+}
+
 function doneHTML(){
   const when = submission && (submission.updatedAt || submission.submittedAt);
   const title = doneKind === 'updated' ? '수정 내용이 반영됐어요' : '제출 감사합니다';
@@ -848,6 +993,7 @@ function doneHTML(){
   <h1>${title}</h1>
   <p>${lead}</p>
   ${pendingEdit ? '<p class="pend">제출한 뒤 고치던 내용이 저장돼 있어요. ‘수정 내용 제출하기’를 눌러야 반영돼요.</p>' : ''}
+  ${kitHTML()}
   <div class="edit-box"><button type="button" class="btn-edit" id="editBtn">${pendingEdit ? '고치던 내용 이어서 하기' : '제출한 내용 수정하기'}</button><p>${where}</p></div>
   <dl class="info">
     <div><dt>교육 일시</dt><dd>${esc(CONFIG.EDU_DATE)}</dd></div>
@@ -856,6 +1002,7 @@ function doneHTML(){
   </dl></div>`;
 }
 function bindDone(root){
+  bindKit(root);
   const b = $('#editBtn', root); if (!b) return;
   b.addEventListener('click', () => {
     editMode = true; toReview = false; pcToReview = false; cur = 'review'; pcSec = 4;
@@ -1226,6 +1373,7 @@ async function loadRemote(){
     const out = await res.json();
     if (out.ok && out.member) applyMember(out.member);
     if (out.ok && out.submission) applySubmission(out.submission);
+    if (out.ok) practice = out.practice || null;
     if (out.ok && out.draft && member) {
       const subAt = submission ? new Date(submission.updatedAt || submission.submittedAt) : null;
       if (!subAt || new Date(out.draft.updatedAt) > subAt) { applyDraft(out.draft); pendingEdit = !!submission; }
